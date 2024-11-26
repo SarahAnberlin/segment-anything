@@ -60,7 +60,7 @@ for root, dir, files in os.walk(data_root):
             show_anns(masks)
             plt.axis('off')
             plt.savefig(
-                os.path.join(root, f"{file}_mask.png"),
+                os.path.join(root, f"{os.path.splitext(file)[0]}_mask.png"),
                 bbox_inches='tight',  # 去掉多余的白边
                 pad_inches=0  # 不留填充空间
             )
