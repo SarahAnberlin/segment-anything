@@ -40,6 +40,7 @@ for root, dir, files in os.walk(data_root):
         file_path = os.path.join(root, file)
         if file.endswith('.png') or file.endswith('.jpg'):
             data_path = os.path.join(root, file)
+            print(f"Processing {data_path}")
             data = cv2.imread(data_path)
             data = cv2.cvtColor(data, cv2.COLOR_BGR2RGB)
             masks = None
@@ -51,4 +52,8 @@ for root, dir, files in os.walk(data_root):
             plt.imshow(data)
             show_anns(masks)
             plt.axis('off')
-            plt.savefig(os.path.join(root, f"{file}_mask.png"))
+            plt.savefig(
+                os.path.join(root, f"{file}_mask.png"),
+                bbox_inches='tight',  # 去掉多余的白边
+                pad_inches=0  # 不留填充空间
+            )
