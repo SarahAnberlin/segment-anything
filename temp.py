@@ -38,7 +38,14 @@ data_root = r'C:\Users\smartmore\Desktop\Test100'
 for root, dir, files in os.walk(data_root):
     for file in files:
         file_path = os.path.join(root, file)
-        if file.endswith('.png') or file.endswith('.jpg'):
+        if 'mask' in file:
+            # Delete
+            os.remove(file_path)
+
+for root, dir, files in os.walk(data_root):
+    for file in files:
+        file_path = os.path.join(root, file)
+        if (file.endswith('.png') or file.endswith('.jpg')):
             data_path = os.path.join(root, file)
             print(f"Processing {data_path}")
             data = cv2.imread(data_path)
