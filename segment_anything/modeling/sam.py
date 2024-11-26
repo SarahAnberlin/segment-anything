@@ -122,7 +122,7 @@ class Sam(nn.Module):
             )
             masks = masks > self.mask_threshold
             outputs.append(
-                {
+                {''''''
                     "masks": masks,
                     "iou_predictions": iou_predictions,
                     "low_res_logits": low_res_masks,
