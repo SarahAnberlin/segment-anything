@@ -36,7 +36,7 @@ for file_path in file_to_handle:
 
     # generate the mask
     outputs = generator(image, points_per_batch=256)
-
+    print(f"Processing {file_path}")
     # display the original image
     plt.imshow(np.array(image))
     ax = plt.gca()
