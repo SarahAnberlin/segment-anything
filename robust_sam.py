@@ -31,6 +31,7 @@ for root, dir, files in os.walk(data_root):
         file_path = os.path.join(root, file)
         if (file.endswith('.jpg') or file.endswith('.png')) and 'mask' not in file_path:
             file_to_handle.append(file_path)
+file_to_handle = sorted(file_to_handle)
 print(file_to_handle)
 time.sleep(1000)
 for file_path in file_to_handle:
