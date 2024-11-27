@@ -24,13 +24,13 @@ def show_mask(mask, ax, random_color=False):
 # initialize the pipeline for mask generation
 generator = pipeline("mask-generation", model="jadechoghari/robustsam-vit-huge", device=0, points_per_batch=256)
 
-data_root = '/dataset/vfayezzhang/test/SAM/data/Test100/input/'
+data_root = '/dataset/vfayezzhang/test/SAM/data/Test100/'
 file_to_handle = []
 
 for root, dir, files in os.walk(data_root):
     for file in files:
         file_path = os.path.join(root, file)
-        if (file.endswith('.jpg') or file.endswith('.png')) and 'mask' not in file_path:
+        if (file.endswith('.jpg') or file.endswith('.png')) and 'mask' not in file_path and 'output' not in file_path:
             file_to_handle.append(file_path)
 file_to_handle = sorted(file_to_handle)
 print(file_to_handle)
