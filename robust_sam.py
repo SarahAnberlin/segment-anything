@@ -47,9 +47,12 @@ for file_path in file_to_handle:
 
     plt.axis("off")
 
+    base_name = os.path.basename(file_path)
+    base_prefix = os.path.splitext(base_name)[0]
+
     # show the image with the masks
     plt.savefig(
-        os.path.join(data_root, f"{os.path.splitext(file)[0]}_robust_mask.png"),
+        os.path.join(data_root, base_prefix.replace('_mask', '_robust_mask') + '.png'),
         bbox_inches='tight',  # 去掉多余的白边
         pad_inches=0  # 不留填充空间
     )
