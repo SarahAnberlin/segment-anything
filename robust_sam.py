@@ -53,6 +53,8 @@ for file_path in file_to_handle:
 
     base_name = os.path.basename(file_path)
     base_prefix = os.path.splitext(base_name)[0]
+    save_path = os.path.join(data_root, base_prefix + '_robust_mask.png')
+    print(f"Saving to {save_path}")
 
     # show the image with the masks
     plt.savefig(
