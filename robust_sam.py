@@ -56,7 +56,7 @@ for file_path in file_to_handle:
 
     # show the image with the masks
     plt.savefig(
-        os.path.join(data_root, base_prefix.replace('mask', 'robust_mask') + '.png'),
+        os.path.join(data_root, base_prefix + '_robust_mask.png'),
         bbox_inches='tight',  # 去掉多余的白边
         pad_inches=0  # 不留填充空间
     )
