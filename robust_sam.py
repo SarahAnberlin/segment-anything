@@ -1,4 +1,5 @@
 import os
+import time
 
 from transformers import pipeline
 from PIL import Image
@@ -30,6 +31,8 @@ for root, dir, files in os.walk(data_root):
         file_path = os.path.join(root, file)
         if (file.endswith('.jpg') or file.endswith('.png')) and 'mask' not in file_path:
             file_to_handle.append(file_path)
+print(file_to_handle)
+time.sleep(1000)
 for file_path in file_to_handle:
     # load the image
     image = Image.open(file_path)
@@ -52,7 +55,7 @@ for file_path in file_to_handle:
 
     # show the image with the masks
     plt.savefig(
-        os.path.join(data_root, base_prefix.replace('_mask', '_robust_mask') + '.png'),
+        os.path.join(data_root, base_prefix.replace('mask', 'robust_mask') + '.png'),
         bbox_inches='tight',  # 去掉多余的白边
         pad_inches=0  # 不留填充空间
     )
