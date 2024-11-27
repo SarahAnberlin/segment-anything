@@ -34,6 +34,8 @@ def process_folders(input_folder, target_folder, output_folder):
         target_img_path = target_files[key]
         input_seg_path = input_img_path.replace(".jpg", "_mask.png").replace(".png", "_mask.png")
         target_seg_path = target_img_path.replace(".jpg", "_mask.png").replace(".png", "_mask.png")
+        input_robust_seg_path = input_img_path.replace(".jpg", "_robust_mask.png").replace(".png", "_robust_mask.png")
+        target_robust_seg_path = target_img_path.replace(".jpg", "_robust_mask.png").replace(".png", "_robust_mask.png")
 
         if not os.path.exists(input_seg_path) or not os.path.exists(target_seg_path):
             print(f"Missing segmentation for {key}, skipping...")
@@ -43,9 +45,12 @@ def process_folders(input_folder, target_folder, output_folder):
         target_img = cv2.imread(target_img_path)
         input_seg = cv2.imread(input_seg_path)
         target_seg = cv2.imread(target_seg_path)
+        input_robust_seg = cv2.imread(input_robust_seg_path)
+        target_robust_seg = cv2.imread(target_robust_seg_path)
 
         # Ensure all images have the same height
-        images = resize_to_same_height([target_img, target_seg, input_img, input_seg])
+        images = resize_to_same_height(
+            [target_img, target_seg, target_robust_seg, input_img, input_seg, input_robust_seg])
 
         # Combine images horizontally
         combined = np.hstack(images)

@@ -1,6 +1,7 @@
 import os
 import time
 
+import cv2
 from transformers import pipeline
 from PIL import Image
 import matplotlib.pyplot as plt
@@ -38,6 +39,15 @@ for file_path in file_to_handle:
     # load the image
     image = Image.open(file_path)
 
+    base_name = os.path.basename(file_path)
+    base_prefix = os.path.splitext(base_name)[0]
+    save_path = os.path.join(data_root, base_prefix + '_robust_mask.png')
+    if os.path.exists(save_path):
+        img = cv2.imread(save_path)
+        if img is not None:
+            print(f"Skip {save_path}")
+            continue
+
     # generate the mask
     outputs = generator(image, points_per_batch=256)
     print(f"Processing {file_path}")
@@ -51,9 +61,6 @@ for file_path in file_to_handle:
 
     plt.axis("off")
 
-    base_name = os.path.basename(file_path)
-    base_prefix = os.path.splitext(base_name)[0]
-    save_path = os.path.join(data_root, base_prefix + '_robust_mask.png')
     print(f"Saving to {save_path}")
 
     # show the image with the masks
