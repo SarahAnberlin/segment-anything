@@ -1,0 +1,10 @@
+Name: "gen-seg"
+Image: "harbor.smoa.cc/fayez/cuda121conda:runtime"
+Command: "source ~/.bashrc; conda activate mySAM; cd ~/test/SAM/; export 
+  PYTHONPATH=. ; python robust_sam.py"
+GPU: 1                           # optional
+Debug: false                     # optional 
+Excludes:
+  - node01
+  - node02
+arch: ampere
