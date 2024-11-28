@@ -50,7 +50,7 @@ for file in file_to_handle:
     data = cv2.imread(file)
     data = cv2.cvtColor(data, cv2.COLOR_BGR2RGB)
     print(f"Data range: {data.min()} - {data.max()}")
-    noise = np.random.normal(0, 50 / 255, data.shape) * 255
+    noise = np.random.normal(0, 50 / 255, data.shape) * 255.0
     data = data + noise
     print(f"data shape: {data.shape}")
     masks = None
@@ -72,6 +72,6 @@ for file in file_to_handle:
 
     plt.savefig(
         os.path.join(save_root, f"{os.path.splitext(base_name)[0]}_mask.png"),
-        bbox_inches='tight',  # 去掉多余的白边
-        pad_inches=0  # 不留填充空间
+        bbox_inches='tight',
+        pad_inches=0
     )
