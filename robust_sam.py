@@ -22,6 +22,11 @@ def show_mask(mask, ax, random_color=False):
     ax.imshow(mask_image)
 
 
+def write_log(log_file, content):
+    with open(log_file, 'a') as f:
+        f.write(content + '\n')
+
+
 log_file = 'log.txt'
 # redirect the sysout to the log file
 sys.stdout = open(log_file, 'w')
@@ -37,12 +42,11 @@ for root, dir, files in os.walk(data_root):
         if (file.endswith('.jpg') or file.endswith('.png')) and 'mask' not in file_path and 'output' not in file_path:
             file_to_handle.append(file_path)
 file_to_handle = sorted(file_to_handle)
-print('\n'.join(file_to_handle))
+write_log(log_file, '\n'.join(file_to_handle))
 
 for file_path in file_to_handle:
     # load the image
-    print(f"Processing {file_path}")
-
+    write_log(log_file, f"Processing {file_path}")
     image = Image.open(file_path)
 
     base_name = os.path.basename(file_path)
@@ -53,7 +57,7 @@ for file_path in file_to_handle:
     if os.path.exists(save_path):
         img = cv2.imread(save_path)
         if img is not None:
-            print(f"Skip {save_path} as it already exists")
+            write_log(log_file, f"Skip {file_path}")
             continue
 
     # generate the mask
@@ -68,7 +72,7 @@ for file_path in file_to_handle:
 
     plt.axis("off")
 
-    print(f"Saving to {save_path}")
+    write_log(log_file, f"Save {save_path}")
 
     # show the image with the masks
     plt.savefig(
