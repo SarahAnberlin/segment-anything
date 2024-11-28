@@ -50,7 +50,7 @@ for file in file_to_handle:
     data = cv2.imread(file)
     data = cv2.cvtColor(data, cv2.COLOR_BGR2RGB)
     print(f"Data range: {data.min()} - {data.max()}")
-    noise = np.random.normal(0, 50 / 255, data.shape)
+    noise = np.random.normal(0, 50 / 255, data.shape) * 255
     data = data + noise
     print(f"data shape: {data.shape}")
     masks = None
@@ -64,7 +64,7 @@ for file in file_to_handle:
     plt.axis('off')
     cv2.imwrite(
         os.path.join(save_root, os.path.basename(file)),
-        cv2.cvtColor(data, cv2.COLOR_RGB2BGR)
+        cv2.cvtColor(data, cv2.COLOR_RGB2BGR).astype(np.uint8)
     )
 
     plt.savefig(
