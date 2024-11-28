@@ -34,7 +34,7 @@ sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
 sam.to(device=device)
 mask_generator = SamAutomaticMaskGenerator(sam)
 
-data_root = r'C:\Users\smartmore\Desktop\Test100'
+data_root = r'/dataset/vfayezzhang/test/SAM/data/Test100/target/'
 for root, dir, files in os.walk(data_root):
     for file in files:
         file_path = os.path.join(root, file)

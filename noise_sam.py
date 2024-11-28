@@ -34,7 +34,7 @@ sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
 sam.to(device=device)
 mask_generator = SamAutomaticMaskGenerator(sam)
 
-data_root = r'C:\Users\smartmore\Desktop\Test100\target'
+data_root = r'/dataset/vfayezzhang/test/SAM/data/Test100/target/'
 file_to_handle = []
 np.random.seed(0)
 for root, dir, files in os.walk(data_root):
@@ -43,7 +43,7 @@ for root, dir, files in os.walk(data_root):
         if 'mask' not in file:
             file_to_handle.append(file_path)
 
-save_root = r'C:\Users\smartmore\Desktop\Test100\gnoise'
+save_root = os.path.join(data_root, '../gnoise')
 os.makedirs(save_root, exist_ok=True)
 for file in file_to_handle:
     print(f"Processing {file}")
