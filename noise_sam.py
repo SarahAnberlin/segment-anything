@@ -44,39 +44,41 @@ for root, dir, files in os.walk(data_root):
             file_to_handle.append(file_path)
 
 file_to_handle = sorted(file_to_handle)
-save_root = os.path.join(data_root, '../gnoise')
-os.makedirs(save_root, exist_ok=True)
-for file in file_to_handle:
-    print(f"Processing {file}")
-    data = cv2.imread(file)
-    data = cv2.cvtColor(data, cv2.COLOR_BGR2RGB).astype(np.float32)
-    print(f"Data range: {data.min()} - {data.max()}")
-    data = data / 255.0
-    noise = np.random.normal(0, 50 / 255.0, data.shape)
-    data = data + noise
-    print(f"data shape: {data.shape}")
-    masks = None
+sigmas = [15, 25, 50]
+for sigma in sigmas:
+    save_root = os.path.join(data_root, f'../gnoise_{sigma}')
+    os.makedirs(save_root, exist_ok=True)
+    for file in file_to_handle:
+        print(f"Processing {file}")
+        data = cv2.imread(file)
+        data = cv2.cvtColor(data, cv2.COLOR_BGR2RGB).astype(np.float32)
+        print(f"Data range: {data.min()} - {data.max()}")
+        data = data / 255.0
+        noise = np.random.normal(0, sigma / 255.0, data.shape)
+        data = data + noise
+        print(f"data shape: {data.shape}")
+        masks = None
 
-    with torch.no_grad():
-        masks = mask_generator.generate(data * 255.0)
+        with torch.no_grad():
+            masks = mask_generator.generate(data * 255.0)
 
-    plt.figure(figsize=(20, 20))
-    plt.imshow(data)
-    show_anns(masks)
-    plt.axis('off')
-    data = np.clip(data, 0, 1)
-    data = data * 255.0
-    data = data.astype(np.uint8)
-    data = cv2.cvtColor(data, cv2.COLOR_RGB2BGR)
-    base_name = os.path.basename(file)
-    cv2.imwrite(
-        os.path.join(save_root, base_name),
-        data
-    )
+        plt.figure(figsize=(20, 20))
+        plt.imshow(data)
+        show_anns(masks)
+        plt.axis('off')
+        data = np.clip(data, 0, 1)
+        data = data * 255.0
+        data = data.astype(np.uint8)
+        data = cv2.cvtColor(data, cv2.COLOR_RGB2BGR)
+        base_name = os.path.basename(file)
+        cv2.imwrite(
+            os.path.join(save_root, base_name),
+            data
+        )
 
-    plt.savefig(
-        os.path.join(save_root, f"{os.path.splitext(base_name)[0]}_mask.png"),
-        bbox_inches='tight',
-        pad_inches=0
-    )
-    plt.close()
+        plt.savefig(
+            os.path.join(save_root, f"{os.path.splitext(base_name)[0]}_mask.png"),
+            bbox_inches='tight',
+            pad_inches=0
+        )
+        plt.close()
