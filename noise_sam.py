@@ -44,6 +44,7 @@ for root, dir, files in os.walk(data_root):
             file_to_handle.append(file_path)
 
 save_root = r'C:\Users\smartmore\Desktop\Test100\gnoise'
+os.makedirs(save_root, exist_ok=True)
 for file in file_to_handle:
     print(f"Processing {file}")
     data = cv2.imread(file)
