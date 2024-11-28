@@ -48,15 +48,16 @@ os.makedirs(save_root, exist_ok=True)
 for file in file_to_handle:
     print(f"Processing {file}")
     data = cv2.imread(file)
-    data = cv2.cvtColor(data, cv2.COLOR_BGR2RGB)
+    data = cv2.cvtColor(data, cv2.COLOR_BGR2RGB).astype(np.float32)
     print(f"Data range: {data.min()} - {data.max()}")
-    noise = np.random.normal(0, 50 / 255, data.shape) * 255.0
+    data = data / 255.0
+    noise = np.random.normal(0, 50 / 255.0, data.shape)
     data = data + noise
     print(f"data shape: {data.shape}")
     masks = None
 
     with torch.no_grad():
-        masks = mask_generator.generate(data)
+        masks = mask_generator.generate(data * 255.0)
 
     plt.figure(figsize=(20, 20))
     plt.imshow(data)
@@ -67,7 +68,7 @@ for file in file_to_handle:
     base_name = os.path.basename(file)
     cv2.imwrite(
         os.path.join(save_root, base_name),
-        data
+        (data * 255).astype(np.uint8)
     )
 
     plt.savefig(
