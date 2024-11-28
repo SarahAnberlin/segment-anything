@@ -62,9 +62,11 @@ for file in file_to_handle:
     plt.imshow(data)
     show_anns(masks)
     plt.axis('off')
+    data = data.astype(np.uint8)
+    data = cv2.cvtColor(data, cv2.COLOR_RGB2BGR)
     cv2.imwrite(
         os.path.join(save_root, os.path.basename(file)),
-        cv2.cvtColor(data, cv2.COLOR_RGB2BGR).astype(np.uint8)
+        data
     )
 
     plt.savefig(
