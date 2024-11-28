@@ -64,13 +64,14 @@ for file in file_to_handle:
     plt.axis('off')
     data = data.astype(np.uint8)
     data = cv2.cvtColor(data, cv2.COLOR_RGB2BGR)
+    base_name = os.path.basename(file)
     cv2.imwrite(
-        os.path.join(save_root, os.path.basename(file)),
+        os.path.join(save_root, base_name),
         data
     )
 
     plt.savefig(
-        os.path.join(save_root, f"{os.path.splitext(file)[0]}_mask.png"),
+        os.path.join(save_root, f"{os.path.splitext(base_name)[0]}_mask.png"),
         bbox_inches='tight',  # 去掉多余的白边
         pad_inches=0  # 不留填充空间
     )
