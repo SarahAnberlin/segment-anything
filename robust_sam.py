@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 
 import cv2
@@ -21,6 +22,9 @@ def show_mask(mask, ax, random_color=False):
     ax.imshow(mask_image)
 
 
+log_file = 'log.txt'
+# redirect the sysout to the log file
+sys.stdout = open(log_file, 'w')
 # initialize the pipeline for mask generation
 generator = pipeline("mask-generation", model="jadechoghari/robustsam-vit-huge", device=0, points_per_batch=256)
 
@@ -33,7 +37,7 @@ for root, dir, files in os.walk(data_root):
         if (file.endswith('.jpg') or file.endswith('.png')) and 'mask' not in file_path and 'output' not in file_path:
             file_to_handle.append(file_path)
 file_to_handle = sorted(file_to_handle)
-print(file_to_handle)
+print('\n'.join(file_to_handle))
 
 for file_path in file_to_handle:
     # load the image
