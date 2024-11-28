@@ -64,6 +64,7 @@ for file in file_to_handle:
     plt.imshow(data)
     show_anns(masks)
     plt.axis('off')
+    data = np.clip(data, 0, 1)
     data = data * 255.0
     data = data.astype(np.uint8)
     data = cv2.cvtColor(data, cv2.COLOR_RGB2BGR)
