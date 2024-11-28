@@ -51,6 +51,7 @@ for file in file_to_handle:
     data = cv2.cvtColor(data, cv2.COLOR_BGR2RGB)
     noise = np.random.normal(0, 50 / 255, data.shape)
     data = data + noise
+    print(f"data shape: {data.shape}")
     masks = None
 
     with torch.no_grad():
