@@ -38,7 +38,7 @@ data_root = r'/dataset/vfayezzhang/test/SAM/data/Test100/target/'
 for root, dir, files in os.walk(data_root):
     for file in files:
         file_path = os.path.join(root, file)
-        if 'mask' in file:
+        if 'mask' in file and 'robust' not in file:
             # Delete
             os.remove(file_path)
 
