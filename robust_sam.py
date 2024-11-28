@@ -45,7 +45,8 @@ for file_path in file_to_handle:
 
     base_name = os.path.basename(file_path)
     base_prefix = os.path.splitext(base_name)[0]
-    save_path = os.path.join(data_root, base_prefix + '_robust_mask.png')
+    save_dir = os.path.dirname(file_path)
+    save_path = os.path.join(save_dir, base_prefix + '_robust_mask.png')
     if os.path.exists(save_path):
         img = cv2.imread(save_path)
         if img is not None:
