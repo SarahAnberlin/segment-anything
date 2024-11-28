@@ -45,7 +45,7 @@ for root, dir, files in os.walk(data_root):
 for root, dir, files in os.walk(data_root):
     for file in files:
         file_path = os.path.join(root, file)
-        if (file.endswith('.png') or file.endswith('.jpg') and 'mask' not in file):
+        if (file.endswith('.png') or file.endswith('.jpg')) and 'mask' not in file:
             data_path = os.path.join(root, file)
             print(f"Processing {data_path}")
             data = cv2.imread(data_path)
