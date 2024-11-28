@@ -80,3 +80,4 @@ for file_path in file_to_handle:
         bbox_inches='tight',  # 去掉多余的白边
         pad_inches=0  # 不留填充空间
     )
+    plt.close()
