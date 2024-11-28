@@ -1,6 +1,7 @@
 import os
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 def resize_to_same_height(images):
@@ -26,10 +27,18 @@ def process_folders(data_root, input_folders, output_folder):
             if (f.endswith(".jpg") or f.endswith(".png")) and "mask" not in f
         }
 
-    for key, value in input_files:
-        # Load images
-        img_paths = input_files[key]
-        for img_path in img_paths:
+    for img_id in sorted(next(iter(input_files.values()))):  # Iterate over IDs from any folder
+        print(f"Processing ID: {img_id}")
+        rows = []
+        fig, axes = plt.subplots(len(input_folders), 1, figsize=(15, 5 * len(input_folders)))
+        fig.tight_layout(pad=5)
+
+        for key, img_paths in input_files.items():
+            img_path = next((path for path in img_paths if img_id in path), None)
+            if not img_path:
+                print(f"Missing image for {key} and ID {img_id}, skipping...")
+                continue
+
             sam_seg_path = img_path.replace(".jpg", "_mask.png").replace(".png", "_mask.png")
             robust_seg_path = img_path.replace(".jpg", "_robust_mask.png").replace(".png", "_robust_mask.png")
 
@@ -42,16 +51,23 @@ def process_folders(data_root, input_folders, output_folder):
             input_robust_seg = cv2.imread(robust_seg_path)
 
             # Ensure all images have the same height
-            images = resize_to_same_height(
-                [input_img, input_seg, input_robust_seg])
+            images = resize_to_same_height([input_img, input_seg, input_robust_seg])
 
             # Combine images horizontally
-            combined = np.hstack(images)
+            row = np.hstack(images)
+            rows.append(row)
 
-            # Save combined image
-            output_path = os.path.join(output_folder, f"{key}_combined.png")
-            cv2.imwrite(output_path, combined)
-            print(f"Saved combined image: {output_path}")
+            # Plotting the combined row
+            ax = axes[input_folders.index(key)]
+            ax.imshow(cv2.cvtColor(row, cv2.COLOR_BGR2RGB))
+            ax.set_title(f"{key}")
+            ax.axis("off")
+
+        # Save the combined figure
+        output_path = os.path.join(output_dir, f"{img_id}_combined.png")
+        plt.savefig(output_path)
+        plt.close(fig)
+        print(f"Saved combined figure: {output_path}")
 
 
 data_root = '/dataset/vfayezzhang/test/SAM/data/Test100'
