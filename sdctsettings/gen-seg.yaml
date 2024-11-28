@@ -1,7 +1,7 @@
-Name: "gen-seg"
+Name: "seg-gn-sam"
 Image: "harbor.smoa.cc/fayez/cuda121conda:runtime"
 Command: "source ~/.bashrc; conda activate mySAM; cd ~/test/SAM/; export 
-  PYTHONPATH=. ; python robust_sam.py"
+  PYTHONPATH=. ; python noise_sam.py"
 GPU: 1                           # optional
 Debug: false                     # optional 
 Excludes:

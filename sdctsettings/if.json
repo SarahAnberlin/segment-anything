@@ -1,8 +1,0 @@
-{
-  "Name": "if-50",
-  "Image": "harbor.smoa.cc/fayez/cuda121conda:runtime",
-  "Command": "source ~/.bashrc ; conda activate DIR; cd ~/test/DIR/new_train ;  export PYTHONPATH=.; python train.py --cfg-file if.yml",
-  "GPU": 8,
-  "Debug": false,
-  "arch": "ampere"
-}
