@@ -78,3 +78,4 @@ for file in file_to_handle:
         bbox_inches='tight',
         pad_inches=0
     )
+    plt.close()
