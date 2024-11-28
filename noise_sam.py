@@ -49,6 +49,7 @@ for file in file_to_handle:
     print(f"Processing {file}")
     data = cv2.imread(file)
     data = cv2.cvtColor(data, cv2.COLOR_BGR2RGB)
+    print(f"Data range: {data.min()} - {data.max()}")
     noise = np.random.normal(0, 50 / 255, data.shape)
     data = data + noise
     print(f"data shape: {data.shape}")
@@ -65,6 +66,7 @@ for file in file_to_handle:
         os.path.join(save_root, os.path.basename(file)),
         cv2.cvtColor(data, cv2.COLOR_RGB2BGR)
     )
+
     plt.savefig(
         os.path.join(save_root, f"{os.path.splitext(file)[0]}_mask.png"),
         bbox_inches='tight',  # 去掉多余的白边
