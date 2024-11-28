@@ -43,6 +43,7 @@ for root, dir, files in os.walk(data_root):
         if 'mask' not in file:
             file_to_handle.append(file_path)
 
+file_to_handle = sorted(file_to_handle)
 save_root = os.path.join(data_root, '../gnoise')
 os.makedirs(save_root, exist_ok=True)
 for file in file_to_handle:
